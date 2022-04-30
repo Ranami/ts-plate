@@ -40,11 +40,13 @@ const SubtaskHeader = styled("h2")`
 `;
 
 const TasksAmount = styled("span")`
-  width: 19px;
-  height: 18px;
-  border-radius: 10px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50px;
+  padding: 4px;
   color: #625f6d;
-  background-color: #e0e0e0;
+  background-color: #bcbcbc;
+  box-sizing: border-box;
 `;
 
 export const TasksPage = () => {
@@ -81,8 +83,8 @@ export const TasksPage = () => {
           return (
             <div key={subtasks.stage}>
               <SubtaskHeader>
-                {subtasks.stageName}
-                <TasksAmount>&ensp;{subtasks?.items.length}</TasksAmount>
+                {subtasks.stageName}&ensp;
+                <TasksAmount>{subtasks?.items.length}</TasksAmount>
               </SubtaskHeader>
               <TasksList subtasks={subtasks} />
             </div>

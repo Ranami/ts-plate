@@ -20,7 +20,8 @@ const SubTaskData = styled("div")`
   margin-top: 12px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  justify-content: space-between;
+  gap: 10px;
 `;
 
 const DateText = styled("div")`
