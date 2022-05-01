@@ -1,5 +1,6 @@
 import { styled } from "@mui/material";
-import { FC } from "react";
+import { FC, useCallback } from "react";
+import { useDrag } from "react-dnd";
 import { Item } from "../types/taskTypes";
 
 const SubTaskBlock = styled("div")`
@@ -12,6 +13,7 @@ const SubTaskBlock = styled("div")`
   transition: 0.3s;
   &:hover {
     transform: scale(1.1);
+    cursor: pointer;
   }
 `;
 
@@ -54,9 +56,10 @@ const TaskProgress = styled("div")`
 
 type Props = {
   item: Item;
+  index: number;
 };
 
-export const TaskBlock: FC<Props> = ({ item }) => {
+export const TaskBlock: FC<Props> = ({ item, index }) => {
   enum Months {
     "января",
     "февраля",
@@ -72,14 +75,26 @@ export const TaskBlock: FC<Props> = ({ item }) => {
     "декабря",
   }
 
-  const getTime = (date: Date) => {
-    return `${date.getDay()} ${Months[date.getMonth()]}, в ${
-      date.getHours() >= 10 ? date.getHours() : "0" + date.getHours()
-    }:${date.getMinutes() >= 10 ? date.getMinutes() : "0" + date.getMinutes()}`;
-  };
+  const getTime = useCallback(
+    (date: Date) => {
+      return `${date.getDate()} ${Months[date.getMonth()]}, в ${
+        date.getHours() >= 10 ? date.getHours() : "0" + date.getHours()
+      }:${
+        date.getMinutes() >= 10 ? date.getMinutes() : "0" + date.getMinutes()
+      }`;
+    },
+    [Months]
+  );
 
+  const [{ isDragging }, drag] = useDrag(() => ({
+    type: "taskBlock",
+    item: { item, dragIndex: index },
+    collect: (monitor) => ({
+      isDragging: !!monitor.isDragging(),
+    }),
+  }));
   return (
-    <SubTaskBlock key={item.taskId}>
+    <SubTaskBlock key={item.taskId} ref={drag}>
       <SubTaskData>
         <TaskProgress>{item.taskTypeName}</TaskProgress>
         <DateText>{getTime(new Date(item.createTimestamp))}</DateText>

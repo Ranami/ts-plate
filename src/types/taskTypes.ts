@@ -2,6 +2,7 @@ export enum TaskActionType {
   FETCH_TASKS = "FETCH_TASKS",
   FETCH_TASKS_SUCCESS = "FETCH_TASKS_SUCCESS",
   FETCH_TASKS_REJECT = "FETCH_TASKS_REJECT",
+  DRAG_N_DROP = "DRAG_N_DROP",
 }
 
 export type Item = {
@@ -41,7 +42,19 @@ export type FetchTaskRejectAction = {
   payload: string;
 };
 
+type DragNDropPayload = {
+  item: Item;
+  dragIndex: number;
+  dropIndex: number;
+};
+
+export type DragNDropAction = {
+  type: TaskActionType.DRAG_N_DROP;
+  payload: DragNDropPayload;
+};
+
 export type TaskAction =
   | FetchTaskAction
   | FetchTaskSucessAction
-  | FetchTaskRejectAction;
+  | FetchTaskRejectAction
+  | DragNDropAction;

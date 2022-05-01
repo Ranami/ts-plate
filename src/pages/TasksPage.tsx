@@ -79,14 +79,14 @@ export const TasksPage = () => {
     <Wrapper>
       <Header>Задачи Насырова Рамира</Header>
       <TasksWrapper>
-        {tasks.map((subtasks) => {
+        {tasks.map((subtasks, index) => {
           return (
             <div key={subtasks.stage}>
               <SubtaskHeader>
                 {subtasks.stageName}&ensp;
                 <TasksAmount>{subtasks?.items.length}</TasksAmount>
               </SubtaskHeader>
-              <TasksList subtasks={subtasks} />
+              <TasksList subtasks={subtasks} index={index} />
             </div>
           );
         })}
