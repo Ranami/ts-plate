@@ -34,6 +34,11 @@ type Response = {
   dragIndex: number;
 };
 
+const DropBlock = styled("div")`
+  width: 100px;
+  height: 100px;
+`;
+
 export const TasksList: FC<Props> = ({ subtasks, index }) => {
   const dispatch = useDispatch();
 

@@ -3,6 +3,7 @@ export enum TaskActionType {
   FETCH_TASKS_SUCCESS = "FETCH_TASKS_SUCCESS",
   FETCH_TASKS_REJECT = "FETCH_TASKS_REJECT",
   DRAG_N_DROP = "DRAG_N_DROP",
+  DELETE_TASK = "DELETE_TASK",
 }
 
 export type Item = {
@@ -42,6 +43,11 @@ export type FetchTaskRejectAction = {
   payload: string;
 };
 
+type DeleteTaskAction = {
+  type: TaskActionType.DELETE_TASK;
+  payload: { item: Item; index: number };
+};
+
 type DragNDropPayload = {
   item: Item;
   dragIndex: number;
@@ -57,4 +63,5 @@ export type TaskAction =
   | FetchTaskAction
   | FetchTaskSucessAction
   | FetchTaskRejectAction
-  | DragNDropAction;
+  | DragNDropAction
+  | DeleteTaskAction;

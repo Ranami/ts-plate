@@ -1,7 +1,9 @@
-import { styled } from "@mui/material";
-import { FC, useCallback } from "react";
-import { useDrag } from "react-dnd";
-import { Item } from "../types/taskTypes";
+import { IconButton, Popover, styled } from "@mui/material";
+import { FC, useCallback, useRef, useState } from "react";
+import { DropTargetOptions, useDrag, useDrop } from "react-dnd";
+import { Item, TaskActionType } from "../types/taskTypes";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { useDispatch } from "react-redux";
 
 const SubTaskBlock = styled("div")`
   width: 230px;
@@ -24,6 +26,7 @@ const SubTaskData = styled("div")`
   flex-direction: column;
   justify-content: space-between;
   gap: 10px;
+  padding-top: 25px;
 `;
 
 const DateText = styled("div")`
@@ -57,6 +60,11 @@ const TaskProgress = styled("div")`
 type Props = {
   item: Item;
   index: number;
+};
+
+type Response = {
+  item: Item;
+  dragIndex: number;
 };
 
 export const TaskBlock: FC<Props> = ({ item, index }) => {
@@ -93,13 +101,56 @@ export const TaskBlock: FC<Props> = ({ item, index }) => {
       isDragging: !!monitor.isDragging(),
     }),
   }));
+
+  const dispatch = useDispatch();
+
+  const anchorEl = useRef<HTMLDivElement>(null);
+  const [open, setOpen] = useState(false);
+
+  const handleClick = () => {
+    setOpen(!open);
+  };
+
+  const handleClose = () => {
+    setOpen(!open);
+  };
+
+  const handleDelete = () => {
+    const result = window.confirm("Удалить?");
+    if (result) {
+      dispatch({ type: TaskActionType.DELETE_TASK, payload: { item, index } });
+    }
+    setOpen(!open);
+  };
+
   return (
-    <SubTaskBlock key={item.taskId} ref={drag}>
-      <SubTaskData>
-        <TaskProgress>{item.taskTypeName}</TaskProgress>
-        <DateText>{getTime(new Date(item.createTimestamp))}</DateText>
-        <Name>{item.clientName ? item.clientName : "Неизвестный"}</Name>
-      </SubTaskData>
-    </SubTaskBlock>
+    <div onClick={handleClick} ref={anchorEl}>
+      <SubTaskBlock key={item.taskId} ref={drag}>
+        <SubTaskData>
+          <TaskProgress>{item.taskTypeName}</TaskProgress>
+          <DateText>{getTime(new Date(item.createTimestamp))}</DateText>
+          <Name>{item.clientName ? item.clientName : "Неизвестный"}</Name>
+        </SubTaskData>
+
+        <Popover
+          open={open}
+          anchorEl={anchorEl.current}
+          onClose={handleClose}
+          id={`task-item-${item.taskId}`}
+          anchorOrigin={{
+            vertical: "center",
+            horizontal: "left",
+          }}
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "center",
+          }}
+        >
+          <IconButton onClick={handleDelete}>
+            <DeleteIcon />
+          </IconButton>
+        </Popover>
+      </SubTaskBlock>
+    </div>
   );
 };

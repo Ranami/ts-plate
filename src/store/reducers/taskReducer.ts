@@ -33,6 +33,18 @@ export const taskReducer: Reducer<TaskState, TaskAction> = (
       });
 
       return { tasks: [...changedTasks], loading: state.loading };
+
+    case TaskActionType.DELETE_TASK:
+      const newState = { ...state };
+      newState.tasks = state.tasks.map((items, index) => {
+        if (index === action.payload.index) {
+          items.items = items.items.filter(
+            (item) => item.taskId !== action.payload.item.taskId
+          );
+        }
+        return items;
+      });
+      return newState;
     default:
       return state;
   }
