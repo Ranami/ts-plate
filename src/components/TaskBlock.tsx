@@ -1,6 +1,6 @@
-import { IconButton, Popover, styled } from "@mui/material";
+import { debounce, IconButton, Popover, styled } from "@mui/material";
 import { FC, useCallback, useRef, useState } from "react";
-import { DropTargetOptions, useDrag, useDrop } from "react-dnd";
+import { useDrag } from "react-dnd";
 import { Item, TaskActionType } from "../types/taskTypes";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useDispatch } from "react-redux";
@@ -57,14 +57,13 @@ const TaskProgress = styled("div")`
   text-align: center;
 `;
 
+const CustomIconButton = styled(IconButton)`
+  pointer-events: all;
+`;
+
 type Props = {
   item: Item;
   index: number;
-};
-
-type Response = {
-  item: Item;
-  dragIndex: number;
 };
 
 export const TaskBlock: FC<Props> = ({ item, index }) => {
@@ -106,13 +105,21 @@ export const TaskBlock: FC<Props> = ({ item, index }) => {
 
   const anchorEl = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
+  const [delayHandler, setDelayHandler] = useState(0);
 
   const handleClick = () => {
-    setOpen(!open);
+    setDelayHandler(
+      window.setTimeout(() => {
+        setOpen(!open);
+      }, 500)
+    );
   };
 
   const handleClose = () => {
-    setOpen(!open);
+    clearTimeout(delayHandler);
+    if (open) {
+      setOpen(!open);
+    }
   };
 
   const handleDelete = () => {
@@ -124,7 +131,7 @@ export const TaskBlock: FC<Props> = ({ item, index }) => {
   };
 
   return (
-    <div onClick={handleClick} ref={anchorEl}>
+    <div ref={anchorEl} onMouseEnter={handleClick} onMouseLeave={handleClose}>
       <SubTaskBlock key={item.taskId} ref={drag}>
         <SubTaskData>
           <TaskProgress>{item.taskTypeName}</TaskProgress>
@@ -135,20 +142,20 @@ export const TaskBlock: FC<Props> = ({ item, index }) => {
         <Popover
           open={open}
           anchorEl={anchorEl.current}
-          onClose={handleClose}
+          style={{ pointerEvents: "none" }}
           id={`task-item-${item.taskId}`}
           anchorOrigin={{
-            vertical: "center",
+            vertical: "bottom",
             horizontal: "left",
           }}
           transformOrigin={{
-            vertical: "top",
+            vertical: "bottom",
             horizontal: "center",
           }}
         >
-          <IconButton onClick={handleDelete}>
+          <CustomIconButton onClick={handleDelete}>
             <DeleteIcon />
-          </IconButton>
+          </CustomIconButton>
         </Popover>
       </SubTaskBlock>
     </div>
