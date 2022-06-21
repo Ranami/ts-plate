@@ -13,10 +13,19 @@ function App() {
     <DndProvider backend={HTML5Backend}>
       <Navbar />
       <Routes>
-        <Route path="/" element={"Home"} />
-        <Route path="/todo" element={<TodoPage />} />
-        <Route path="/user" element={<UserList />} />
-        <Route path="/tasks" element={<TasksPage />} />
+        <Route path="https://ranami.github.io/ts-plate/" element={"Home"} />
+        <Route
+          path="https://ranami.github.io/ts-plate/todo"
+          element={<TodoPage />}
+        />
+        <Route
+          path="https://ranami.github.io/ts-plate/user"
+          element={<UserList />}
+        />
+        <Route
+          path="https://ranami.github.io/ts-plate/tasks"
+          element={<TasksPage />}
+        />
       </Routes>
     </DndProvider>
   );
