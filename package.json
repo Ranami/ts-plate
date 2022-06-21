@@ -1,6 +1,7 @@
 {
   "name": "ts-plate",
   "version": "0.1.0",
+  "homepage": "https://ranami.github.io/ts-plate/",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.9.0",
@@ -53,6 +54,7 @@
     ]
   },
   "devDependencies": {
+    "gh-pages": "^4.0.0",
     "redux-devtools-extension": "^2.13.9"
   }
 }
