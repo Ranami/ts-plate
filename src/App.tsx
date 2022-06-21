@@ -13,10 +13,10 @@ function App() {
     <DndProvider backend={HTML5Backend}>
       <Navbar />
       <Routes>
-        <Route path="/ts-plate" element={"Home"} />
-        <Route path="/ts-plate/todo" element={<TodoPage />} />
-        <Route path="/ts-plate/user" element={<UserList />} />
-        <Route path="/ts-plate/tasks" element={<TasksPage />} />
+        <Route path="/" element={"Home"} />
+        <Route path="/todo" element={<TodoPage />} />
+        <Route path="/user" element={<UserList />} />
+        <Route path="/tasks" element={<TasksPage />} />
       </Routes>
     </DndProvider>
   );
