@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/ts-plate/static/css/main.a0f1eea6.css",
-    "main.js": "/ts-plate/static/js/main.2f4b8a7d.js",
+    "main.js": "/ts-plate/static/js/main.bd196e2a.js",
     "index.html": "/ts-plate/index.html",
     "main.a0f1eea6.css.map": "/ts-plate/static/css/main.a0f1eea6.css.map",
-    "main.2f4b8a7d.js.map": "/ts-plate/static/js/main.2f4b8a7d.js.map"
+    "main.bd196e2a.js.map": "/ts-plate/static/js/main.bd196e2a.js.map"
   },
   "entrypoints": [
     "static/css/main.a0f1eea6.css",
-    "static/js/main.2f4b8a7d.js"
+    "static/js/main.bd196e2a.js"
   ]
 }
