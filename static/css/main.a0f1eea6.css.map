@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/main.a0f1eea6.css","mappings":"AAAA,KAEI,wBAAyB,CACzB,kBAAqB,CACrB,iBAAkB,CAHlB,QAIJ","sources":["App.css"],"sourcesContent":["body {\r\n    margin: 0;\r\n    background-color: #e5e5e5;\r\n    font-family: 'Roboto';\r\n    font-style: normal;\r\n}"],"names":[],"sourceRoot":""}
